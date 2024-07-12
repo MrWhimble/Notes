@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:Notes.ViewModels">
+    
+    <DataTemplate x:Key="TagEditorTagTemplate"
+                  DataType="{x:Type vm:TagViewModel}">
+        <Border CornerRadius="3"
+                BorderThickness="1"
+                BorderBrush="Black"
+                Margin="2 1"
+                Padding="2 1">
+            <Border.Background>
+                <SolidColorBrush Color="{Binding Mode=OneWay, Path=Color}"/>
+            </Border.Background>
+            <DockPanel LastChildFill="True">
+                <TextBlock DockPanel.Dock="Right" 
+                           Text="{Binding Importance, Mode=OneWay}"
+                           FontSize="13"
+                           Margin="4 0"/>
+                <TextBlock Text="{Binding Name, Mode=OneWay}"
+                           FontSize="13"
+                           Margin="4 0 0 0"/>
+            </DockPanel>
+        </Border>
+    </DataTemplate>
+    
+</ResourceDictionary>

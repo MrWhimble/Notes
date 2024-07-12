@@ -1,0 +1,98 @@
+﻿<Window x:Class="Notes.Views.TagEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        xmlns:vm="clr-namespace:Notes.ViewModels"
+        xmlns:cp="clr-namespace:ColorPicker;assembly=ColorPicker"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance vm:TagEditorViewModel}"
+        Title="Tag Editor" Height="450" Width="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding ClosedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <CollectionViewSource x:Key="TagEditorTagList"
+                              Source="{Binding TagViewModelList}"
+                              IsLiveSortingRequested="True">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Importance" Direction="Descending"/>
+                <scm:SortDescription PropertyName="Name" Direction="Ascending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="0"
+                 ItemsSource="{Binding Source={StaticResource TagEditorTagList}}"
+                 ItemTemplate="{StaticResource TagEditorTagTemplate}"
+                 SelectionMode="Single"
+                 SelectedItem="{Binding SelectedTagViewModel, Mode=TwoWay}"
+                 HorizontalContentAlignment="Stretch"/>
+        <TextBlock Text="Select a tag&#x0a;to edit" 
+                   Grid.Column="1"
+                   TextAlignment="Center"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        <DockPanel Grid.Column="1"
+                   Visibility="{Binding SelectedTagViewModel, Converter={StaticResource NullToVisibilityConverter}}"
+                   Background="White">
+            <Button DockPanel.Dock="Bottom" 
+                    Width="32"
+                    Height="32"
+                    HorizontalAlignment="Right"
+                    Padding="4"
+                    Command="{Binding RemoveTagCommand}">
+                <Image Source="{StaticResource BinIcon}"/>
+            </Button>
+            <DockPanel LastChildFill="True"
+                       IsEnabled="{Binding SelectedTagViewModel, Converter={StaticResource NullToBoolConverter}}">
+                <StackPanel>
+                    <TextBlock Text="Name"
+                               FontSize="20"
+                               VerticalAlignment="Center"
+                               Height="29"
+                               Margin="3 0"/>
+                    <TextBlock Text="Importance"
+                               FontSize="20"
+                               VerticalAlignment="Center"
+                               Height="29"
+                               Margin="3 0"/>
+                    <TextBlock Text="Background"
+                               FontSize="20"
+                               VerticalAlignment="Center"
+                               Height="29"
+                               Margin="3 0"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBox Text="{Binding SelectedTagViewModel.Name, Mode=TwoWay, TargetNullValue='', UpdateSourceTrigger=PropertyChanged}"
+                             FontSize="20"
+                             Height="29"/>
+                    <TextBox Text="{Binding SelectedTagViewModel.Importance, Mode=TwoWay, TargetNullValue='', UpdateSourceTrigger=PropertyChanged}"
+                             FontSize="20" 
+                             Height="29"/>
+                    <cp:PortableColorPicker Height="29" 
+                                            ShowAlpha="False"
+                                            SelectedColor="{Binding SelectedTagViewModel.Color, Mode=TwoWay, TargetNullValue={x:Static Colors.White}, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </DockPanel>
+            
+        </DockPanel>
+        <Button Grid.Column="1" 
+                Width="32"
+                Height="32"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Padding="4"
+                Command="{Binding AddTagCommand}">
+            <Image Source="{StaticResource AddIcon}"/>
+        </Button>
+    </Grid>
+</Window>

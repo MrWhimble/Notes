@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:Notes.ViewModels">
+    
+    <DataTemplate x:Key="MiniIconTemplate"
+                  DataType="{x:Type vm:IconViewModel}">
+        <Grid Visibility="{Binding IconState, Converter={StaticResource IconStateToNotBlankVisibilityConverter}}">
+            <Image Source="{Binding Icon, IsAsync=True}" 
+                   Stretch="Uniform"
+                   Visibility="{Binding IconState, Converter={StaticResource IconStateToLoadedVisibilityConverter}}"/>
+            <Grid Background="Black"
+                  Visibility="{Binding IconState, Converter={StaticResource IconStateToLoadingVisibilityConverter}}">
+                <ProgressBar Orientation="Horizontal"
+                             Value="{Binding DownloadingProgress, Mode=OneWay}"
+                             Height="10"
+                             VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Background="Black"
+                       Visibility="{Binding IconState, Converter={StaticResource IconStateToErrorVisibilityConverter}}">
+                <Image Source="{StaticResource ExclamationIcon}"
+                       Stretch="Uniform"
+                       Margin="2"/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+    
+</ResourceDictionary>

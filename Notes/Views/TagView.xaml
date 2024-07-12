@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:Notes.ViewModels">
+    
+    <DataTemplate x:Key="TagTemplate"
+                  DataType="{x:Type vm:TagViewModel}">
+        <Border CornerRadius="3"
+                BorderThickness="1"
+                BorderBrush="Black"
+                Margin="2 2"
+                Padding="4 2">
+            <Border.Background>
+                <SolidColorBrush Color="{Binding Color, Mode=OneWay}"/>
+            </Border.Background>
+            <TextBlock Text="{Binding Name, Mode=OneWay}"
+                       FontSize="13"/>
+        </Border>
+    </DataTemplate>
+    
+</ResourceDictionary>

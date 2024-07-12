@@ -1,0 +1,74 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <ApplicationIcon>Icons\Icon.ico</ApplicationIcon>
+        <RootNamespace>Notes</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.122" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="PixiEditor.ColorPicker" Version="3.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Icons\BinIcon.png" />
+      <Resource Include="Icons\BinIcon.png" />
+      <None Remove="Icons\CrossIcon.png" />
+      <Resource Include="Icons\CrossIcon.png" />
+      <None Remove="Icons\TagIcon.png" />
+      <Resource Include="Icons\TagIcon.png" />
+      <None Remove="Icons\DownArrowIcon.png" />
+      <Resource Include="Icons\DownArrowIcon.png" />
+      <None Remove="Icons\UpArrowIcon.png" />
+      <Resource Include="Icons\UpArrowIcon.png" />
+      <None Remove="Icons\CornerResizeIcon.png" />
+      <Resource Include="Icons\CornerResizeIcon.png" />
+      <None Remove="Icons\CrossIcon_12x12.png" />
+      <Resource Include="Icons\CrossIcon_12x12.png" />
+      <None Remove="Icons\LockIcon.png" />
+      <Resource Include="Icons\LockIcon.png" />
+      <None Remove="Icons\CornerResizeIcon_BLACK.png" />
+      <Resource Include="Icons\CornerResizeIcon_BLACK.png" />
+      <None Remove="Icons\BinIcon_BLACK.png" />
+      <Resource Include="Icons\BinIcon_BLACK.png" />
+      <None Remove="Icons\AddIcon.png" />
+      <Resource Include="Icons\AddIcon.png" />
+      <None Remove="Icons\AddIcon_BLACK.png" />
+      <Resource Include="Icons\AddIcon_BLACK.png" />
+      <None Remove="Icons\Icon.ico" />
+      <Resource Include="Icons\Icon.ico" />
+      <None Remove="Icons\ExclamationIcon.png" />
+      <Resource Include="Icons\ExclamationIcon.png" />
+      <None Remove="Icons\ExclamationIcon_BLACK.png" />
+      <Resource Include="Icons\ExclamationIcon_BLACK.png" />
+      <None Remove="Icons\ExclamationIcon_256x256.png" />
+      <Resource Include="Icons\ExclamationIcon_256x256.png" />
+      <None Remove="Icons\ImageIcon.png" />
+      <Resource Include="Icons\ImageIcon.png" />
+      <None Remove="Icons\ImageIcon_BLACK.png" />
+      <Resource Include="Icons\ImageIcon_BLACK.png" />
+      <None Remove="Icons\LeftArrowIcon.png" />
+      <Resource Include="Icons\LeftArrowIcon.png" />
+      <None Remove="Icons\RightArrowIcon.png" />
+      <Resource Include="Icons\RightArrowIcon.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Views\EditTagListWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
+</Project>

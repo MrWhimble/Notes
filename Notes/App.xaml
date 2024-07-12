@@ -1,0 +1,28 @@
+﻿
+<Application x:Class="Notes.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Notes">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Styles.xaml"/>
+                
+                <ResourceDictionary Source="Views/CommonResources.xaml"/>
+                <ResourceDictionary Source="Views/MiniTagView.xaml"/>
+                <ResourceDictionary Source="Views/TagView.xaml"/>
+                <ResourceDictionary Source="Views/TagEditorTagView.xaml"/>
+                <ResourceDictionary Source="Views/ToggleTagView.xaml"/>
+                <ResourceDictionary Source="Views/FilterTagView.xaml"/>
+                <ResourceDictionary Source="Views/NoteView.xaml"/>
+                <ResourceDictionary Source="Views/MiniIconView.xaml"/>
+                <ResourceDictionary Source="Views/SelectableItemView.xaml"/>
+                <ResourceDictionary Source="Views/IconView.xaml"/>
+                <ResourceDictionary Source="Views/ItemView.xaml"/>
+                <ResourceDictionary Source="Views/FloatingItemView.xaml"/>
+                <ResourceDictionary Source="Views/LayoutView.xaml"/>
+                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

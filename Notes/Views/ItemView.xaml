@@ -1,0 +1,77 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+                    xmlns:c="clr-namespace:Notes.Controls"
+                    xmlns:vm="clr-namespace:Notes.ViewModels">
+    
+    <DataTemplate x:Key="ItemTemplate"
+                  DataType="{x:Type vm:ItemViewModel}">
+        <DockPanel LastChildFill="True">
+            <DockPanel LastChildFill="True"
+                       DockPanel.Dock="Top">
+                <ContentControl DockPanel.Dock="Left"
+                                Content="{Binding IconViewModel}"
+                                ContentTemplate="{StaticResource IconTemplate}"
+                                Background="Transparent"
+                                MaxWidth="100"
+                                MaxHeight="100"/>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel.Resources>
+                        <CollectionViewSource x:Key="TagList"
+                                              Source="{Binding TagViewModelList}"
+                                              IsLiveSortingRequested="True">
+                            <CollectionViewSource.SortDescriptions>
+                                <scm:SortDescription PropertyName="Importance" Direction="Descending"/>
+                                <scm:SortDescription PropertyName="Name" Direction="Ascending"/>
+                            </CollectionViewSource.SortDescriptions>
+                        </CollectionViewSource>
+                    </StackPanel.Resources>
+                    <DockPanel LastChildFill="True"
+                               Height="30">
+                        <Button DockPanel.Dock="Left"
+                                Command="{Binding EditIconCommand}">
+                            <Image Source="{StaticResource ImageIcon}"
+                                   Margin="2"/>
+                        </Button>
+                        <Button DockPanel.Dock="Left"
+                                Command="{Binding EditTagsCommand}">
+                            <Image Source="{StaticResource TagIcon}"
+                                   Margin="2"/>
+                        </Button>
+                        <Button DockPanel.Dock="Right"
+                                Command="{Binding RemoveCommand}">
+                            <Image Source="{StaticResource BinIcon}"
+                                   Margin="2"/>
+                        </Button>
+                        <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 c:HintedTextBox.Hint="Name"
+                                 FontSize="21"/>
+                    </DockPanel>
+                    <ItemsControl ItemsSource="{Binding Source={StaticResource TagList}}"
+                                  ItemTemplate="{Binding Source={StaticResource TagTemplate}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"
+                                           HorizontalAlignment="Stretch"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <Grid Background="Gray"/>
+                </StackPanel>
+            </DockPanel>
+            <DockPanel LastChildFill="True"
+                       DockPanel.Dock="Top">
+                <Button Content="New"
+                        DockPanel.Dock="Right"
+                        Command="{Binding NewNoteCommand}"/>
+                <TextBlock Text="Notes:"/>
+            </DockPanel>
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding NoteViewModelList}"
+                              ItemTemplate="{StaticResource NoteTemplate}">
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
+    </DataTemplate>
+    
+</ResourceDictionary>
