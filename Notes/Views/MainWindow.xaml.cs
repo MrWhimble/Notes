@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Notes.ViewModels;
+using System.Windows.Interop;
 
 namespace Notes.Views
 {
@@ -24,6 +12,17 @@ namespace Notes.Views
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        // From https://stackoverflow.com/a/9802870
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
+
+            if (hwndSource != null)
+                hwndSource.CompositionTarget!.RenderMode = RenderMode.SoftwareOnly;
+            
+            base.OnSourceInitialized(e);
         }
     }
 }
