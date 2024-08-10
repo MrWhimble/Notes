@@ -1,6 +1,6 @@
 ﻿namespace Notes.ViewModels;
 
-public enum IconState
+public enum ImageState
 {
     Blank,
     UriError,

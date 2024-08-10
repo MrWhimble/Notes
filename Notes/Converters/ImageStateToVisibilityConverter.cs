@@ -6,7 +6,7 @@ using Notes.ViewModels;
 
 namespace Notes.Converters;
 
-public class IconStateToVisibilityConverter  : IValueConverter
+public class ImageStateToVisibilityConverter : IValueConverter
 {
     public Visibility BlankValue { get; set; }
     public Visibility UriErrorValue { get; set; }
@@ -15,13 +15,13 @@ public class IconStateToVisibilityConverter  : IValueConverter
     
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        IconState iconState = (IconState)value;
-        switch (iconState)
+        ImageState imageState = (ImageState)value;
+        switch (imageState)
         {
-            case IconState.Blank: return BlankValue;
-            case IconState.UriError: return UriErrorValue;
-            case IconState.Loading: return LoadingValue;
-            case IconState.Loaded: return LoadedValue;
+            case ImageState.Blank: return BlankValue;
+            case ImageState.UriError: return UriErrorValue;
+            case ImageState.Loading: return LoadingValue;
+            case ImageState.Loaded: return LoadedValue;
         }
 
         return Visibility.Visible;

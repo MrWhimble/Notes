@@ -1,5 +1,10 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using Notes.Extensions;
 using Notes.Models;
 
 namespace Notes.ViewModels;
@@ -58,6 +63,37 @@ public class NoteViewModel : ViewModelBase
         }
     }
 
+    public ImageViewModel ImageViewModel { get; private set; }
+
+    public Dock ImageDisplayDock
+    {
+        get => Note.ImageDisplaySide.ToDock();
+        set
+        {
+            if (Note.ImageDisplaySide.ToDock() == value)
+                return;
+            Note.ImageDisplaySide = value.ToSide();
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(ImageMaxWidth));
+            OnPropertyChanged(nameof(ImageMaxHeight));
+        }
+    }
+
+    public double ImageSize
+    {
+        get => Note.ImageSize;
+        set
+        {
+            Note.ImageSize = Math.Max(0, value);
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(ImageMaxWidth));
+            OnPropertyChanged(nameof(ImageMaxHeight));
+        }
+    }
+    
+    public double ImageMaxWidth => ImageDisplayDock is Dock.Left or Dock.Right ? ImageSize : double.MaxValue;
+    public double ImageMaxHeight => ImageDisplayDock is Dock.Top or Dock.Bottom ? ImageSize : double.MaxValue;
+
     public bool CanMoveUp => _itemViewModel.NoteViewModelList.IndexOf(this) > 0;
     public bool CanMoveDown => _itemViewModel.NoteViewModelList.IndexOf(this) < _itemViewModel.NoteViewModelList.Count - 1;
 
@@ -65,11 +101,16 @@ public class NoteViewModel : ViewModelBase
     {
         _itemViewModel = itemViewModel;
         Note = note;
+        ImageViewModel = new ImageViewModel(Note.ImageUriString, _itemViewModel.MainWindowViewModel);
+        ImageViewModel.PropertyChanged += OnImagePropertyChanged;
     }
 
     public override void Dispose()
     {
         _itemViewModel = null;
+        ImageViewModel.PropertyChanged -= OnImagePropertyChanged;
+        ImageViewModel.Dispose();
+        ImageViewModel = null;
     }
 
     private RelayCommand _moveUpCommand;
@@ -145,9 +186,70 @@ public class NoteViewModel : ViewModelBase
         _itemViewModel.NoteViewModelList[^1].UpdateCanMoves();
     }
 
+    private RelayCommand _editImageCommand;
+    public ICommand EditImageCommand
+    {
+        get
+        {
+            if (_editImageCommand == null)
+                _editImageCommand = new RelayCommand(param => EditImage());
+            return _editImageCommand;
+        }
+    }
+    public void EditImage()
+    {
+        ImageViewModel.OpenEditor();
+    }
+
+    private RelayCommand _setImageDockCommand;
+    public ICommand SetImageDockCommand
+    {
+        get
+        {
+            if (_setImageDockCommand == null)
+                _setImageDockCommand = new RelayCommand(param => SetImageDock((Dock)param));
+            return _setImageDockCommand;
+        }
+    }
+    public void SetImageDock(Dock dock)
+    {
+        ImageDisplayDock = dock;
+    }
+
+    private RelayCommand _imageResizeCommand;
+    public ICommand ImageResizeCommand
+    {
+        get
+        {
+            if (_imageResizeCommand == null)
+                _imageResizeCommand = new RelayCommand(param => ResizeImage(param as DragDeltaEventArgs));
+            return _imageResizeCommand;
+        }
+    }
+
+    public void ResizeImage(DragDeltaEventArgs e)
+    {
+        double change = ImageDisplayDock is Dock.Left or Dock.Right ? e.HorizontalChange : e.VerticalChange;
+        if (ImageDisplayDock is Dock.Right)
+            change *= -1;
+        ImageSize += change;
+    }
+
     public void UpdateCanMoves()
     {
         OnPropertyChanged(nameof(CanMoveDown));
         OnPropertyChanged(nameof(CanMoveUp));
+    }
+    
+    private void OnImagePropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(ImageViewModel.ImageUriString))
+            return;
+
+        if (sender is not ImageViewModel imageViewModel)
+            return;
+        
+        string newUriString = imageViewModel.ImageUriString;
+        Note.ImageUriString = newUriString;
     }
 }

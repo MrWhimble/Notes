@@ -10,8 +10,8 @@
             <DockPanel LastChildFill="True"
                        DockPanel.Dock="Top">
                 <ContentControl DockPanel.Dock="Left"
-                                Content="{Binding IconViewModel}"
-                                ContentTemplate="{StaticResource IconTemplate}"
+                                Content="{Binding ImageViewModel}"
+                                ContentTemplate="{StaticResource ImageTemplate}"
                                 Background="Transparent"
                                 MaxWidth="100"
                                 MaxHeight="100"/>

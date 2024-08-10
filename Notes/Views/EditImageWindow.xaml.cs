@@ -2,9 +2,9 @@
 
 namespace Notes.Views;
 
-public partial class EditIconWindow : Window
+public partial class EditImageWindow : Window
 {
-    public EditIconWindow()
+    public EditImageWindow()
     {
         InitializeComponent();
     }

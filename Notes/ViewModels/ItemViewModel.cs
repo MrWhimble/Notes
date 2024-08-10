@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using Notes.Models;
@@ -27,7 +28,8 @@ public class ItemViewModel : ViewModelBase
         }
     }
     
-    public IconViewModel IconViewModel { get; private set; }
+    //public IconViewModel IconViewModel { get; private set; }
+    public ImageViewModel ImageViewModel { get; private set; }
 
     private ObservableCollection<TagViewModel> _tagViewModelList;
 
@@ -93,8 +95,11 @@ public class ItemViewModel : ViewModelBase
         
         _initialized = true;
 
-        IconViewModel = new IconViewModel(Item, MainWindowViewModel);
-        IconViewModel.IconUriString = item.IconUriString;
+        //IconViewModel = new IconViewModel(Item, MainWindowViewModel);
+        //IconViewModel.IconUriString = item.IconUriString;
+
+        ImageViewModel = new ImageViewModel(Item.IconUriString, MainWindowViewModel);
+        ImageViewModel.PropertyChanged += OnImagePropertyChanged;
     }
 
     public override void Dispose()
@@ -110,9 +115,23 @@ public class ItemViewModel : ViewModelBase
         foreach (var viewModel in NoteViewModelList)
             viewModel.Dispose();
         NoteViewModelList.Clear();
-        
-    }
 
+        ImageViewModel.PropertyChanged -= OnImagePropertyChanged;
+        ImageViewModel.Dispose();
+    }
+    
+    private void OnImagePropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(ImageViewModel.ImageUriString))
+            return;
+
+        if (sender is not ImageViewModel imageViewModel)
+            return;
+        
+        string newUriString = imageViewModel.ImageUriString;
+        Item.IconUriString = newUriString;
+    }
+    
     private void OnTagViewModelListChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         if (!_initialized)
@@ -153,7 +172,7 @@ public class ItemViewModel : ViewModelBase
     }
     public void EditIcon()
     {
-        IconViewModel.OpenEditor();
+        ImageViewModel.OpenEditor();
     }
 
     private RelayCommand _editTagsCommand;

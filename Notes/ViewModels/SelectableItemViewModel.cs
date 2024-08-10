@@ -11,7 +11,7 @@ public class SelectableItemViewModel : ViewModelBase
     private MainWindowViewModel _mainWindowViewModel;
 
     public string Name => _itemViewModel.Name;
-    public IconViewModel IconViewModel => _itemViewModel.IconViewModel;
+    public ImageViewModel ImageViewModel => _itemViewModel.ImageViewModel;
     public ObservableCollection<TagViewModel> TagViewModelList
     {
         get => _itemViewModel.TagViewModelList;

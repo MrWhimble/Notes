@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:c="clr-namespace:Notes.Controls"
                     xmlns:vm="clr-namespace:Notes.ViewModels">
     
@@ -15,18 +16,29 @@
                             <Image Source="{StaticResource BinIcon}"
                                    Margin="2"/>
                         </Button>
+                        <Grid DockPanel.Dock="Right"
+                              Height="25">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="1"
+                                    Command="{Binding MoveDownCommand}"
+                                    IsEnabled="{Binding CanMoveDown}">
+                                <Image Source="{StaticResource DownArrowIcon}"
+                                       Margin="0"/>
+                            </Button>
+                            <Button Grid.Row="0"
+                                    Command="{Binding MoveUpCommand}"
+                                    IsEnabled="{Binding CanMoveUp}">
+                                <Image Source="{StaticResource UpArrowIcon}"
+                                       Margin="0"/>
+                            </Button>
+                        </Grid>
                         <Button DockPanel.Dock="Right"
                                 Height="25"
-                                Command="{Binding MoveDownCommand}"
-                                IsEnabled="{Binding CanMoveDown}">
-                            <Image Source="{StaticResource DownArrowIcon}"
-                                   Margin="2"/>
-                        </Button>
-                        <Button DockPanel.Dock="Right"
-                                Height="25"
-                                Command="{Binding MoveUpCommand}"
-                                IsEnabled="{Binding CanMoveUp}">
-                            <Image Source="{StaticResource UpArrowIcon}"
+                                Command="{Binding EditImageCommand}">
+                            <Image Source="{StaticResource ImageIcon}"
                                    Margin="2"/>
                         </Button>
                         
@@ -39,12 +51,55 @@
                 </BulletDecorator>
             </Expander.Header>
             <Expander.Content>
-                <TextBox Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         c:HintedTextBox.Hint="Content"
-                         AcceptsReturn="True"
-                         FontSize="13"
-                         Background="LightYellow"
-                         TextWrapping="WrapWithOverflow"/>
+                <DockPanel LastChildFill="True">
+                    
+                    <ContentControl DockPanel.Dock="{Binding ImageDisplayDock}" 
+                                    Content="{Binding ImageViewModel}"
+                                    ContentTemplate="{StaticResource ImageTemplate}"
+                                    MaxWidth="{Binding ImageMaxWidth}"
+                                    MaxHeight="{Binding ImageMaxHeight}">
+                        <ContentControl.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem IsCheckable="True"
+                                          IsChecked="{Binding Path=ImageDisplayDock, Mode=OneWay, Converter={StaticResource DockToBoolConverter}, ConverterParameter={x:Static Dock.Left}}"
+                                          Header="Left"
+                                          Command="{Binding SetImageDockCommand}"
+                                          CommandParameter="{x:Static Dock.Left}"/>
+                                <MenuItem IsCheckable="True"
+                                          IsChecked="{Binding Path=ImageDisplayDock, Mode=OneWay, Converter={StaticResource DockToBoolConverter}, ConverterParameter={x:Static Dock.Right}}"
+                                          Header="Right"
+                                          Command="{Binding SetImageDockCommand}"
+                                          CommandParameter="{x:Static Dock.Right}"/>
+                                <MenuItem IsCheckable="True"
+                                          IsChecked="{Binding Path=ImageDisplayDock, Mode=OneWay, Converter={StaticResource DockToBoolConverter}, ConverterParameter={x:Static Dock.Top}}"
+                                          Header="Top"
+                                          Command="{Binding SetImageDockCommand}"
+                                          CommandParameter="{x:Static Dock.Top}"/>
+                                <!--<MenuItem IsCheckable="True"
+                                          IsChecked="{Binding Path=ImageDisplayDock, Mode=OneWay, Converter={StaticResource DockToBoolConverter}, ConverterParameter={x:Static Dock.Bottom}}"
+                                          Header="Bottom"
+                                          Command="{Binding SetImageDockCommand}"
+                                          CommandParameter="{x:Static Dock.Bottom}"/>-->
+                            </ContextMenu>
+                        </ContentControl.ContextMenu>
+                    </ContentControl>
+                    <Thumb DockPanel.Dock="{Binding ImageDisplayDock}"
+                           Visibility="{Binding ImageViewModel.ImageState, Converter={StaticResource ImageStateToNotBlankVisibilityConverter}}"
+                           Cursor="{Binding ImageDisplayDock, Mode=OneWay, Converter={StaticResource DockToCursorConverter}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="DragDelta">
+                                <i:InvokeCommandAction Command="{Binding ImageResizeCommand}" PassEventArgsToCommand="True"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Thumb>
+                    <TextBox Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             c:HintedTextBox.Hint="Content"
+                             AcceptsReturn="True"
+                             FontSize="13"
+                             Background="LightYellow"
+                             TextWrapping="WrapWithOverflow"/>
+                </DockPanel>
+                
             </Expander.Content>
         </Expander>
     </DataTemplate>

@@ -375,14 +375,14 @@ public class MainWindowViewModel : ViewModelBase
             return;
         foreach (ItemViewModel itemViewModel in ItemViewModelList)
         {
-            string uriString = itemViewModel.IconViewModel.IconUriString;
+            string uriString = itemViewModel.ImageViewModel.ImageUriString;
             if (string.IsNullOrWhiteSpace(uriString))
                 continue;
-            if (!itemViewModel.IconViewModel.Icon.BaseUri.IsFile)
+            if (!itemViewModel.ImageViewModel.Image.BaseUri.IsFile)
                 continue;
             if (uriString.StartsWith(LoadedFilePath))
                 uriString = uriString.Substring(LoadedFilePath.Length + 1);
-            itemViewModel.IconViewModel.IconUriString = uriString;
+            itemViewModel.ImageViewModel.ImageUriString = uriString;
         }
     }
 

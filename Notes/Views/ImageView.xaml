@@ -2,21 +2,21 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:Notes.ViewModels">
     
-    <DataTemplate x:Key="IconTemplate"
-                  DataType="{x:Type vm:IconViewModel}">
-        <Grid Visibility="{Binding IconState, Converter={StaticResource IconStateToNotBlankVisibilityConverter}}">
-            <Image Source="{Binding Icon, IsAsync=True}" 
+    <DataTemplate x:Key="ImageTemplate"
+                  DataType="{x:Type vm:ImageViewModel}">
+        <Grid Visibility="{Binding ImageState, Converter={StaticResource ImageStateToNotBlankVisibilityConverter}}">
+            <Image Source="{Binding Image, IsAsync=True}" 
                    Stretch="Uniform"
-                   Visibility="{Binding IconState, Converter={StaticResource IconStateToLoadedVisibilityConverter}}"/>
+                   Visibility="{Binding ImageState, Converter={StaticResource ImageStateToLoadedVisibilityConverter}}"/>
             <Grid Background="Black"
-                  Visibility="{Binding IconState, Converter={StaticResource IconStateToLoadingVisibilityConverter}}">
+                  Visibility="{Binding ImageState, Converter={StaticResource ImageStateToLoadingVisibilityConverter}}">
                 <ProgressBar Orientation="Horizontal"
                              Value="{Binding DownloadingProgress, Mode=OneWay}"
                              Height="20"
                              VerticalAlignment="Center"/>
             </Grid>
             <DockPanel Background="Black"
-                       Visibility="{Binding IconState, Converter={StaticResource IconStateToErrorVisibilityConverter}}"
+                       Visibility="{Binding ImageState, Converter={StaticResource ImageStateToErrorVisibilityConverter}}"
                        LastChildFill="True"
                        MaxWidth="256"
                        MaxHeight="256">

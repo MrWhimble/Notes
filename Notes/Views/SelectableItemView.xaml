@@ -58,8 +58,8 @@
                 <Button.Content>
                     <DockPanel HorizontalAlignment="Stretch"
                                VerticalAlignment="Stretch">
-                        <ContentControl Content="{Binding IconViewModel}"
-                                        ContentTemplate="{StaticResource MiniIconTemplate}"
+                        <ContentControl Content="{Binding ImageViewModel}"
+                                        ContentTemplate="{StaticResource MiniImageTemplate}"
                                         DockPanel.Dock="Left"
                                         Background="Transparent"
                                         MaxWidth="40"

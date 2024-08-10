@@ -14,10 +14,10 @@
                 <ResourceDictionary Source="Views/TagEditorTagView.xaml"/>
                 <ResourceDictionary Source="Views/ToggleTagView.xaml"/>
                 <ResourceDictionary Source="Views/FilterTagView.xaml"/>
+                <ResourceDictionary Source="Views/ImageView.xaml"/>
                 <ResourceDictionary Source="Views/NoteView.xaml"/>
-                <ResourceDictionary Source="Views/MiniIconView.xaml"/>
+                <ResourceDictionary Source="Views/MiniImageView.xaml"/>
                 <ResourceDictionary Source="Views/SelectableItemView.xaml"/>
-                <ResourceDictionary Source="Views/IconView.xaml"/>
                 <ResourceDictionary Source="Views/ItemView.xaml"/>
                 <ResourceDictionary Source="Views/FloatingItemView.xaml"/>
                 <ResourceDictionary Source="Views/LayoutView.xaml"/>

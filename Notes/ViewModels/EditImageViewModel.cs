@@ -4,29 +4,29 @@ using Microsoft.Win32;
 
 namespace Notes.ViewModels;
 
-public class EditIconViewModel : ViewModelBase
+public class EditImageViewModel : ViewModelBase
 {
     private MainWindowViewModel _mainWindowViewModel;
-    public IconViewModel IconViewModel { get; }
+    public ImageViewModel ImageViewModel { get; }
 
-    public string IconUriString
+    public string ImageUriString
     {
-        get => IconViewModel.IconUriString;
+        get => ImageViewModel.ImageUriString;
         set
         {
-            if (Equals(value, IconViewModel.IconUriString))
+            if (Equals(value, ImageViewModel.ImageUriString))
                 return;
-            IconViewModel.IconUriString = value;
+            ImageViewModel.ImageUriString = value;
             OnPropertyChanged();
         }
     }
     
     private static readonly OpenFileDialog OpenFileDialog = new ();
     
-    public EditIconViewModel(IconViewModel iconViewModel, MainWindowViewModel mainWindowViewModel)
+    public EditImageViewModel(ImageViewModel imageViewModel, MainWindowViewModel mainWindowViewModel)
     {
         _mainWindowViewModel = mainWindowViewModel;
-        IconViewModel = iconViewModel;
+        ImageViewModel = imageViewModel;
         
         OpenFileDialog.Multiselect = false;
         OpenFileDialog.Title = "Select Image";
@@ -74,6 +74,6 @@ public class EditIconViewModel : ViewModelBase
             filePath.StartsWith(_mainWindowViewModel.LoadedFilePath))
             filePath = filePath.Substring(_mainWindowViewModel.LoadedFilePath.Length + 1);
 
-        IconUriString = filePath;
+        ImageUriString = filePath;
     }
 }
