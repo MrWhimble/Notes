@@ -14,4 +14,10 @@ Tags can either be required or unwanted to narrow down a search as much as requi
 ![Tag_Editor_Screenshot](https://github.com/user-attachments/assets/901b30b5-d0dd-4f26-9c6b-250ddce5a245)<br>
 Tags are edited in a seperate window where they can be have their name, background colour, and importance changed.<br>
 Importance is used to help sort the tags beyond just alphabetically.<br>
-This makes it easier to keep more important tags at the top of the list, and group similar tags together.
+This makes it easier to keep more important tags at the top of the list, and group similar tags together.<br>
+### NEW - Images in Notes
+![Images In Notes Screenshot](https://github.com/user-attachments/assets/c7e26b3d-c6cc-4437-abdd-79a46fb131e7)<br>
+Images can be added to notes to give extra context or visuals.<br>
+Images can be aligned to the top, left, or right of the note's content.<br>
+They can be resized by dragging the border between the image and the content.<br>
+Selecting images are the same as selecting icons for items and can be from the local file system or online.
